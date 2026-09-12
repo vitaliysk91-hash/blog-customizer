@@ -28,12 +28,12 @@ export const ArticleParamsForm = ({
 	articleState,
 	setArticleState,
 }: ArticleParamsFormProps) => {
-	const [isOpen, setIsOpen] = useState(false);
+	const [isFormOpen, setIsFormOpen] = useState(false);
 	const [formState, setFormState] = useState<ArticleStateType>(articleState);
 	const formContainerRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		if (!isOpen) {
+		if (!isFormOpen) {
 			return;
 		}
 
@@ -43,7 +43,7 @@ export const ArticleParamsForm = ({
 				event.target instanceof Node &&
 				!formContainerRef.current.contains(event.target)
 			) {
-				setIsOpen(false);
+				setIsFormOpen(false);
 			}
 		};
 
@@ -52,10 +52,10 @@ export const ArticleParamsForm = ({
 		return () => {
 			document.removeEventListener('mousedown', handleOutsideClick);
 		};
-	}, [isOpen]);
+	}, [isFormOpen]);
 
 	const handleToggleForm = () => {
-		setIsOpen((currentState) => !currentState);
+		setIsFormOpen((currentState) => !currentState);
 	};
 
 	const handleFormChange = <Key extends keyof ArticleStateType>(
@@ -77,10 +77,10 @@ export const ArticleParamsForm = ({
 
 	return (
 		<div ref={formContainerRef}>
-			<ArrowButton isOpen={isOpen} onClick={handleToggleForm} />
+			<ArrowButton isOpen={isFormOpen} onClick={handleToggleForm} />
 			<aside
 				className={clsx(styles.container, {
-					[styles.container_open]: isOpen,
+					[styles.container_open]: isFormOpen,
 				})}>
 				<form
 					className={styles.form}
